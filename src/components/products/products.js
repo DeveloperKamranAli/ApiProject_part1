@@ -17,7 +17,9 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import { useNavigate } from "react-router-dom";
 import Autocomplete from "@mui/material/Autocomplete";
 import { addToCart } from "../../slices/add-Cart/addCartSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { addProducts } from "../../slices/add-Cart/products/products";
+import { ToastContainer, toast } from 'react-toastify';
 // import top100Films from './top100Films';
 
 const Products = () => {
@@ -29,7 +31,17 @@ const Products = () => {
 
   const navigate = useNavigate();
 
+  const {isToast} = useSelector ((state) => state.products)
+
   const dispatch = useDispatch();
+
+
+  useEffect(()=>{
+    if(isToast){
+      toast("Products already added")
+    }
+  }, [isToast])
+  
 
   useEffect(() => {
     const fstchproducts = async () => {
@@ -76,6 +88,7 @@ const Products = () => {
 
   return (
     <>
+     <ToastContainer />  
       <Container className="mb-5">
         <Box className="d-flex justify-content-end">
           <Autocomplete
@@ -99,6 +112,7 @@ const Products = () => {
         ) : (
           <Grid container>
             {product?.map((product, index) => {
+              
               return (
                 <Grid xs={12} md={3}>
                   <Card
@@ -114,7 +128,7 @@ const Products = () => {
                   >
                     <Box>
                       <Box sx={{ textAlign: "center" }}>
-                        <img
+                        <img className="img-fluid"
                           style={{
                             maxHeight: "140px",
                             minHeight: "140px",
@@ -130,8 +144,8 @@ const Products = () => {
                           sx={{ textAlign: "center" }}
                           variant="h6"
                         >
-                          {product?.title?.length >= 22
-                            ? product?.title.slice(0, 19)
+                          {product?.title?.length >= 21
+                            ? product?.title.slice(0, 16)
                             : product?.title}
                         </Typography>
                       </Tooltip>
@@ -156,7 +170,7 @@ const Products = () => {
                         </Tooltip>
                         <FavoriteIcon />
                         <AddShoppingCartIcon
-                          onClick={() => dispatch(addToCart())}
+                          onClick={() => dispatch(addProducts( product ))}
                         />
                       </Box>
                     </Box>
