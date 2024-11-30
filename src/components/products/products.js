@@ -16,11 +16,22 @@ import axios from "axios";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { useNavigate } from "react-router-dom";
 import Autocomplete from "@mui/material/Autocomplete";
-import { addToCart } from "../../slices/add-Cart/addCartSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { addProducts } from "../../slices/add-Cart/products/products";
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer, toast } from "react-toastify";
 // import top100Films from './top100Films';
+
+
+
+// Import Swiper styles
+import "swiper/css";
+import 'swiper/css/pagination';
+import "swiper/css/navigation";
+
+// Import Swiper React components
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay, Pagination, Navigation } from 'swiper/modules';
+
 
 const Products = () => {
   const [product, setProducts] = useState([]);
@@ -31,17 +42,18 @@ const Products = () => {
 
   const navigate = useNavigate();
 
-  const {isToast} = useSelector ((state) => state.products)
+  const { isToast, isProductAdded } = useSelector((state) => state.products);
 
   const dispatch = useDispatch();
 
-
-  useEffect(()=>{
-    if(isToast){
-      toast("Products already added")
+  useEffect(() => {
+    if (isToast) {
+      toast("Products already added");
     }
-  }, [isToast])
-  
+    if (isProductAdded) {
+      toast("Products added successfully");
+    }
+  }, [isToast, isProductAdded]);
 
   useEffect(() => {
     const fstchproducts = async () => {
@@ -83,12 +95,11 @@ const Products = () => {
       (product) => product?.category === categoryFilter?.value
     );
     setProducts(filteredProducts);
-    console.log(filteredProducts, "filteredProducts");
   }, [categoryFilter]);
 
   return (
     <>
-     <ToastContainer />  
+      <ToastContainer />
       <Container className="mb-5">
         <Box className="d-flex justify-content-end">
           <Autocomplete
@@ -112,9 +123,8 @@ const Products = () => {
         ) : (
           <Grid container>
             {product?.map((product, index) => {
-              
               return (
-                <Grid xs={12} md={3}>
+                <Grid md={3} sx={12}>
                   <Card
                     key={index}
                     sx={{
@@ -128,7 +138,22 @@ const Products = () => {
                   >
                     <Box>
                       <Box sx={{ textAlign: "center" }}>
-                        <img className="img-fluid"
+                        <Swiper
+                        spaceBetween={30}
+                        centeredSlides={true}
+                        autoplay={{
+                          delay: 2500,
+                          disableOnInteraction: false,
+                        }}
+                        pagination={{
+                          clickable: true,
+                        }}
+                        navigation={false}
+                        modules={[Autoplay, Pagination, Navigation]}
+                        className="mySwiper"
+                        >
+                          <SwiperSlide>  <img
+                          className="img-fluid"
                           style={{
                             maxHeight: "140px",
                             minHeight: "140px",
@@ -136,7 +161,20 @@ const Products = () => {
                           }}
                           src={product.image}
                           alt={product.name}
-                        />
+                        /></SwiperSlide>
+                          <SwiperSlide>  <img
+                          className="img-fluid"
+                          style={{
+                            maxHeight: "140px",
+                            minHeight: "140px",
+                            marginTop: "20px",
+                          }}
+                          src={product.image}
+                          alt={product.name}
+                        /></SwiperSlide>
+                         
+                        </Swiper>
+                      
                       </Box>
                       <Tooltip title={product?.title} placement="top">
                         <Typography
@@ -170,7 +208,7 @@ const Products = () => {
                         </Tooltip>
                         <FavoriteIcon />
                         <AddShoppingCartIcon
-                          onClick={() => dispatch(addProducts( product ))}
+                          onClick={() => dispatch(addProducts(product))}
                         />
                       </Box>
                     </Box>

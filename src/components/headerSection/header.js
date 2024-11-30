@@ -13,12 +13,12 @@ import { useSelector } from "react-redux";
 
 export default function ButtonAppBar() {
   const [open, setOpen] = React.useState(false);
-  const count = useSelector((state) => state.counter);
-  console.log(count, "count");
+  const {items} = useSelector((state) => state.products);
 
   const toggleDrawer = (newOpen: boolean) => () => {
     setOpen(newOpen);
   };
+
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -32,9 +32,9 @@ export default function ButtonAppBar() {
             sx={{ mr: 2 }}
           ></IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            News
+            cart Items
           </Typography>
-          <Badge badgeContent={count.value} color="error">
+          <Badge badgeContent={items?.length} color="error">
             <ShoppingCartIcon onClick={toggleDrawer(true)} />
           </Badge>
         </Toolbar>
