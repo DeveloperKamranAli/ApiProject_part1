@@ -21,17 +21,14 @@ import { addProducts } from "../../slices/add-Cart/products/products";
 import { ToastContainer, toast } from "react-toastify";
 // import top100Films from './top100Films';
 
-
-
 // Import Swiper styles
 import "swiper/css";
-import 'swiper/css/pagination';
+import "swiper/css/pagination";
 import "swiper/css/navigation";
 
 // Import Swiper React components
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, Pagination, Navigation } from 'swiper/modules';
-
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Pagination, Navigation } from "swiper/modules";
 
 const Products = () => {
   const [product, setProducts] = useState([]);
@@ -132,49 +129,52 @@ const Products = () => {
                       cursor: "pointer",
                       width: "230px",
                       minHeight: "250px",
-                      border: "1px solid red",
                       marginTop: "20px",
                     }}
                   >
                     <Box>
                       <Box sx={{ textAlign: "center" }}>
                         <Swiper
-                        spaceBetween={30}
-                        centeredSlides={true}
-                        autoplay={{
-                          delay: 2500,
-                          disableOnInteraction: false,
-                        }}
-                        pagination={{
-                          clickable: true,
-                        }}
-                        navigation={false}
-                        modules={[Autoplay, Pagination, Navigation]}
-                        className="mySwiper"
+                          spaceBetween={30}
+                          centeredSlides={true}
+                          autoplay={{
+                            delay: 2500,
+                            disableOnInteraction: false,
+                          }}
+                          pagination={{
+                            clickable: true,
+                          }}
+                          navigation={false}
+                          modules={[Autoplay, Pagination, Navigation]}
+                          className="mySwiper"
                         >
-                          <SwiperSlide>  <img
-                          className="img-fluid"
-                          style={{
-                            maxHeight: "140px",
-                            minHeight: "140px",
-                            marginTop: "20px",
-                          }}
-                          src={product.image}
-                          alt={product.name}
-                        /></SwiperSlide>
-                          <SwiperSlide>  <img
-                          className="img-fluid"
-                          style={{
-                            maxHeight: "140px",
-                            minHeight: "140px",
-                            marginTop: "20px",
-                          }}
-                          src={product.image}
-                          alt={product.name}
-                        /></SwiperSlide>
-                         
+                          <SwiperSlide>
+                            {" "}
+                            <img
+                              className="img-fluid"
+                              style={{
+                                maxHeight: "140px",
+                                minHeight: "140px",
+                                marginTop: "20px",
+                              }}
+                              src={product.image}
+                              alt={product.name}
+                            />
+                          </SwiperSlide>
+                          <SwiperSlide>
+                            {" "}
+                            <img
+                              className="img-fluid"
+                              style={{
+                                maxHeight: "140px",
+                                minHeight: "140px",
+                                marginTop: "20px",
+                              }}
+                              src={product.image}
+                              alt={product.name}
+                            />
+                          </SwiperSlide>
                         </Swiper>
-                      
                       </Box>
                       <Tooltip title={product?.title} placement="top">
                         <Typography

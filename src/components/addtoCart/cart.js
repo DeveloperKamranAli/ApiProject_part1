@@ -1,5 +1,5 @@
 import * as React from "react";
-import Box, { } from "@mui/material/Box";
+import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import { Button, ButtonGroup, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
@@ -19,11 +19,12 @@ export default function CartList(props) {
 
   const dispatch = useDispatch();
 
-
-  const totalPrice = items?.length && items?.reduce(
-    (sum, products) => sum + products?.price * products.quantity,0
-  );
-  
+  const totalPrice =
+    items?.length &&
+    items?.reduce(
+      (sum, products) => sum + products?.price * products.quantity,
+      0
+    );
 
   return (
     <div>
